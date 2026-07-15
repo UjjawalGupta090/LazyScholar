@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import Leaderboards from './pages/Leaderboards';
 import ConfettiCelebration from './components/ConfettiCelebration';
+import Footer from './components/Footer';
 
 // Game Components
 import GameContainer from './games/GameContainer';
@@ -276,6 +277,12 @@ function App() {
       <div className="flex-1 w-full relative z-10">
         {renderPage()}
       </div>
+
+      <Footer 
+        onNavigate={navigate} 
+        currentPath={currentPath} 
+        currentUser={currentUser} 
+      />
 
       <AuthModal 
         isOpen={authModalOpen} 
