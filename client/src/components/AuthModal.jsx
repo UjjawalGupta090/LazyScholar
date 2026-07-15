@@ -120,7 +120,7 @@ const AuthModal = ({ isOpen, onClose, mode, setMode, onAuthSuccess }) => {
       closedby="any"
       aria-labelledby="modal-title"
     >
-      <div className="glass-panel text-white rounded-lg p-8 w-full max-w-md border border-purple-500/30 flex flex-col gap-1.5 overflow-hidden">
+      <div className="glass-panel text-white rounded-lg p-5 sm:p-8 w-full border border-purple-500/30 flex flex-col gap-1.5 overflow-hidden">
         <div className="flex justify-between items-center mb-4">
           <h2 id="modal-title" className="font-display font-extrabold text-xl md:text-2xl text-[var(--color-neon-cyan)] glow-cyan">
             {mode === 'login' ? 'RETRO LOGIN' : 'CREATING CHAMPION'}

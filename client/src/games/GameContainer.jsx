@@ -178,7 +178,7 @@ const GameContainer = ({ gameId, currentUser, onNavigate, children, score, durat
         ref={dialogRef}
         closedby="any"
       >
-        <div className="glass-panel text-white rounded-lg p-8 w-full max-w-md border border-purple-500/30 overflow-hidden">
+        <div className="glass-panel text-white rounded-lg p-5 sm:p-8 w-full border border-purple-500/30 overflow-hidden">
           <div className="flex justify-between items-center mb-4">
             <h2 className="font-display font-extrabold text-lg text-[var(--color-neon-cyan)] glow-cyan">
               HOW TO PLAY: {formattedGameName.toUpperCase()}

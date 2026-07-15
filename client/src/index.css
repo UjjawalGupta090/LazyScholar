@@ -193,6 +193,8 @@ dialog {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: calc(100% - 2rem);
+  max-width: 420px;
 }
 
 dialog::backdrop {
