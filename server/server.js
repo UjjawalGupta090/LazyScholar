@@ -12,6 +12,9 @@ const scoreRoutes = require('./routes/scores');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+// Trust reverse proxy (Render load balancers) for rate limiting
+app.set('trust proxy', 1);
+
 // CORS configuration - support client origin from Vite (default localhost:5173)
 const corsOptions = {
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174'],
