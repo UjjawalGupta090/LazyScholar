@@ -69,7 +69,7 @@ Live Deployment: [https://lazyscholar.onrender.com/](https://lazyscholar.onrende
    ```env
    PORT=5001
    MONGODB_URI=mongodb://127.0.0.1:27017/lazy-scholar
-   JWT_SECRET=supersecret_retrocabinet_key_1337
+   JWT_SECRET=your_jwt_secret_here
    NODE_ENV=development
    ```
 
