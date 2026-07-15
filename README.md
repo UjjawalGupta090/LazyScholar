@@ -1,8 +1,12 @@
 # Lazy Scholar — Retro Arcade Web App
 
+[![Live App](https://img.shields.io/badge/Live_Demo-Render-informational?style=for-the-badge&logo=render&logoColor=46E3B7)](https://lazyscholar.onrender.com/)
+
 "Simple games. Serious nostalgia. Smart tracking."
 
 Lazy Scholar is a modern, responsive web application bringing back classic computing-era games with polished visuals, secure user authentication, persistent statistics, and real-time global leaderboards. It features subtle, smooth 3D elements powered by Three.js that respond to your movements and transitions.
+
+Live Deployment: [https://lazyscholar.onrender.com/](https://lazyscholar.onrender.com/)
 
 ---
 
@@ -22,6 +26,8 @@ Lazy Scholar is a modern, responsive web application bringing back classic compu
 * **JWT Cookie-Based Session Auth**: Secure, stateless user sessions managed via HTTP-Only cookies to protect dashboard views and secure leaderboard entries.
 * **Smart Score Validation**: Server-side validation rules screen posted points to ensure fair play before updating statistics.
 * **Deduplicated Leaderboards**: Deduplicated ranking lists ensure only a player's single absolute best record shows on the top 10 list.
+* **Dynamic API Routing**: Automatic API host detection routes requests to `localhost:5001` when run locally, or routes relatively in production deployments.
+* **Reverse Proxy Trust**: Configured to trust upstream reverse proxies (like Render's load balancers) to ensure accurate rate-limiting based on client IPs.
 
 ---
 
@@ -40,7 +46,7 @@ Lazy Scholar is a modern, responsive web application bringing back classic compu
 * [Node.js](https://nodejs.org/) (v18+ recommended)
 * [MongoDB](https://www.mongodb.com/) (locally installed or Mongo Atlas URI)
 
-### Quick Start
+### Quick Start (Local Development)
 
 1. **Clone the Repository** and navigate to the directory:
    ```bash
@@ -48,9 +54,9 @@ Lazy Scholar is a modern, responsive web application bringing back classic compu
    ```
 
 2. **Initialize Dependencies**:
-   Install root, client, and server libraries in one go:
+   Install root, client, and server libraries:
    ```bash
-   npm run setup
+   npm run setup && npm install --prefix client
    ```
 
 3. **Database Setup**:
@@ -81,6 +87,26 @@ Lazy Scholar is a modern, responsive web application bringing back classic compu
    * Open [http://localhost:5173/](http://localhost:5173/) in your web browser.
    * Sign up as a new player to log scores.
    * Toggle the CPU/Battery icon in the top right to enable/disable 3D Three.js rendering.
+
+---
+
+## 🌐 Production Deployment (Render)
+
+This application is configured for seamless deployment on Render as a single web service.
+
+### Deployment Strategy
+1. **Frontend Build**: The client React app is built using Vite (`npm run build:client`) which generates static assets in the `/client/dist` directory.
+2. **Backend Server**: The Node/Express server serves these static frontend assets when `NODE_ENV=production` is active:
+   - All incoming requests that do not match `/api/*` route paths are served the static React `index.html` file, letting React Router handle routing on the client side.
+3. **Single Web Service**: This avoids CORS issues and keeps hosting costs low since both client and server run within a single Render Web Service container.
+
+### Render Configuration
+* **Build Command**: `npm install && npm install --prefix client && npm run build:client && npm install --prefix server`
+* **Start Command**: `npm start`
+* **Environment Variables**:
+  - `NODE_ENV`: `production`
+  - `MONGODB_URI`: Your MongoDB Atlas Connection String
+  - `JWT_SECRET`: A secure, secret key for signing JSON Web Tokens
 
 ---
 
