@@ -1,0 +1,16 @@
+{
+  "name": "lazy-scholar",
+  "version": "1.0.0",
+  "description": "Retro arcade platform with modern 3D visual flourishes",
+  "main": "server/server.js",
+  "scripts": {
+    "setup": "mkdir -p mongodb_data && npm install && npm install --prefix server",
+    "dev": "concurrently \"mongod --dbpath ./mongodb_data\" \"npm run dev --prefix client\" \"npm run start --prefix server\"",
+    "dev:nodb": "concurrently \"npm run dev --prefix client\" \"npm run start --prefix server\"",
+    "start": "node server/server.js",
+    "build:client": "npm run build --prefix client"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
