@@ -52,23 +52,33 @@ const GameContainer = ({ gameId, currentUser, onNavigate, children, score, durat
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* Game Bar Header */}
-      <header className="glass-panel rounded-lg px-6 py-3 mb-6 flex items-center justify-between border border-purple-500/20">
-        <div className="flex items-center gap-3">
+      <header className="glass-panel rounded-lg px-4 sm:px-6 py-3 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 border border-purple-500/20">
+        <div className="flex items-center justify-between w-full sm:w-auto gap-3">
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => onNavigate('landing')} 
+              className="p-2 rounded bg-purple-950/20 hover:bg-purple-950/40 text-[var(--color-text-secondary)] hover:text-white transition"
+              title="Main Menu"
+            >
+              <Home className="w-4 h-4" />
+            </button>
+            
+            <h1 className="font-display font-extrabold text-base md:text-lg tracking-wider text-[var(--color-neon-cyan)] glow-cyan">
+              {formattedGameName.toUpperCase()}
+            </h1>
+          </div>
+
+          {/* Mobile-only Guide button */}
           <button 
-            onClick={() => onNavigate('landing')} 
-            className="p-2 rounded bg-purple-950/20 hover:bg-purple-950/40 text-[var(--color-text-secondary)] hover:text-white transition"
-            title="Main Menu"
+            onClick={() => setShowHowTo(true)} 
+            className="sm:hidden p-2 rounded bg-purple-950/20 hover:bg-purple-950/40 text-[var(--color-text-secondary)] hover:text-white transition flex items-center gap-1 text-xs font-bold"
           >
-            <Home className="w-4 h-4" />
+            <Info className="w-4 h-4" />
           </button>
-          
-          <h1 className="font-display font-extrabold text-base md:text-lg tracking-wider text-[var(--color-neon-cyan)] glow-cyan">
-            {formattedGameName.toUpperCase()}
-          </h1>
         </div>
 
         {/* Real-time score & timer stats */}
-        <div className="flex items-center gap-6 font-mono text-sm">
+        <div className="flex items-center justify-center sm:justify-start gap-6 font-mono text-sm w-full sm:w-auto border-t border-purple-500/10 pt-2 sm:pt-0 sm:border-t-0">
           <div className="flex items-center gap-1.5">
             <Trophy className="w-4 h-4 text-yellow-400" />
             <span className="text-[var(--color-text-secondary)]">Score:</span>
@@ -82,13 +92,13 @@ const GameContainer = ({ gameId, currentUser, onNavigate, children, score, durat
           </div>
         </div>
 
-        {/* Info / Instructions */}
+        {/* Desktop-only Guide button */}
         <button 
           onClick={() => setShowHowTo(true)} 
-          className="p-2 rounded bg-purple-950/20 hover:bg-purple-950/40 text-[var(--color-text-secondary)] hover:text-white transition flex items-center gap-1 text-xs font-bold"
+          className="hidden sm:flex p-2 rounded bg-purple-950/20 hover:bg-purple-950/40 text-[var(--color-text-secondary)] hover:text-white transition items-center gap-1 text-xs font-bold"
         >
           <Info className="w-4 h-4" />
-          <span className="hidden sm:inline">GUIDE</span>
+          <span>GUIDE</span>
         </button>
       </header>
 

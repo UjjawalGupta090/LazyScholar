@@ -143,6 +143,7 @@ const PongGame = ({ gameState, setGameState, score, setScore, durationSeconds, s
 
     const handleTouchMove = (e) => {
       if (gameState !== 'playing') return;
+      if (e.cancelable) e.preventDefault();
       const rect = canvas.getBoundingClientRect();
       const relativeY = e.touches[0].clientY - rect.top;
 
@@ -151,7 +152,7 @@ const PongGame = ({ gameState, setGameState, score, setScore, durationSeconds, s
     };
 
     canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
 
     return () => {
       canvas.removeEventListener('mousemove', handleMouseMove);
@@ -368,7 +369,7 @@ const PongGame = ({ gameState, setGameState, score, setScore, durationSeconds, s
         ref={canvasRef} 
         width={480} 
         height={380} 
-        className="border border-purple-500/20 max-w-full rounded bg-black cursor-none"
+        className="border border-purple-500/20 max-w-full rounded bg-black cursor-none touch-none"
       />
       <div className="flex justify-between w-[480px] max-w-full text-xs text-[var(--color-text-secondary)]">
         <span>鼠标移动 或 W/S / 方向键</span>

@@ -121,6 +121,12 @@ const SnakeGame = ({ gameState, setGameState, score, setScore, durationSeconds, 
       touchStartY = e.touches[0].clientY;
     };
 
+    const handleTouchMove = (e) => {
+      if (gameState === 'playing' && speedSelected) {
+        if (e.cancelable) e.preventDefault();
+      }
+    };
+
     const handleTouchEnd = (e) => {
       if (gameState !== 'playing' || !speedSelected) return;
       const touchEndX = e.changedTouches[0].clientX;
@@ -148,12 +154,14 @@ const SnakeGame = ({ gameState, setGameState, score, setScore, durationSeconds, 
 
     const canvas = canvasRef.current;
     if (canvas) {
-      canvas.addEventListener('touchstart', handleTouchStart);
-      canvas.addEventListener('touchend', handleTouchEnd);
+      canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
+      canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+      canvas.addEventListener('touchend', handleTouchEnd, { passive: true });
     }
     return () => {
       if (canvas) {
         canvas.removeEventListener('touchstart', handleTouchStart);
+        canvas.removeEventListener('touchmove', handleTouchMove);
         canvas.removeEventListener('touchend', handleTouchEnd);
       }
     };
@@ -344,7 +352,7 @@ const SnakeGame = ({ gameState, setGameState, score, setScore, durationSeconds, 
         ref={canvasRef} 
         width={380} 
         height={380} 
-        className="border border-purple-500/20 max-w-full rounded bg-black aspect-square cursor-crosshair"
+        className="border border-purple-500/20 max-w-full rounded bg-black aspect-square cursor-crosshair touch-none"
       />
       <div className="flex justify-between w-[380px] max-w-full text-xs text-[var(--color-text-secondary)]">
         <span>⬅️ ⬆️ ⬇️ ➡ or WASD keys</span>
