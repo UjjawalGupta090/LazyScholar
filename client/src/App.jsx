@@ -14,6 +14,10 @@ import TicTacToeGame from './games/TicTacToe/TicTacToeGame';
 import PongGame from './games/Pong/PongGame';
 import MemoryMatchGame from './games/MemoryMatch/MemoryMatchGame';
 
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5001'
+  : '';
+
 function App() {
   // Routing & Session states
   const [currentUser, setCurrentUser] = useState(null);
@@ -53,7 +57,7 @@ function App() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await fetch('http://localhost:5001/api/auth/me', {
+        const res = await fetch(`${API_BASE}/api/auth/me`, {
           credentials: 'include' // send cookies
         });
         if (res.ok) {
@@ -73,7 +77,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5001/api/auth/logout', {
+      await fetch(`${API_BASE}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -99,7 +103,7 @@ function App() {
 
     const gameName = currentPath.split('/')[1]; // e.g. game/snake -> snake
     try {
-      const res = await fetch(`http://localhost:5001/api/scores/${gameName}`, {
+      const res = await fetch(`${API_BASE}/api/scores/${gameName}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ score: finalScore, durationSeconds: duration, result }),
@@ -116,7 +120,7 @@ function App() {
         }
 
         // Reload user stats silently on success
-        const userRes = await fetch('http://localhost:5001/api/auth/me', {
+        const userRes = await fetch(`${API_BASE}/api/auth/me`, {
           credentials: 'include'
         });
         if (userRes.ok) {

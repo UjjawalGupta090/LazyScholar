@@ -15,10 +15,14 @@ const Leaderboards = () => {
   ];
 
   const fetchLeaderboard = async (gameId) => {
+    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5001'
+      : '';
+
     try {
       setLoading(true);
       setError('');
-      const res = await fetch(`http://localhost:5001/api/scores/${gameId}/top`);
+      const res = await fetch(`${API_BASE}/api/scores/${gameId}/top`);
       if (!res.ok) {
         throw new Error('Failed to retrieve leaderboard data');
       }

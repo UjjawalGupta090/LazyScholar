@@ -3,6 +3,10 @@ import { User, Calendar, BarChart3, Clock, RotateCcw, AlertTriangle, Edit, X, Ma
 
 const PRESET_AVATARS = ['👾', '🤖', '🚀', '🛸', '🕹', '💾', '🎮', '🦖'];
 
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5001'
+  : '';
+
 const Dashboard = ({ currentUser, onPlayGame, onUpdateUser }) => {
   const [profile, setProfile] = useState(currentUser);
   const [loading, setLoading] = useState(true);
@@ -28,7 +32,7 @@ const Dashboard = ({ currentUser, onPlayGame, onUpdateUser }) => {
       try {
         setLoading(true);
         // 1. Fetch latest profile
-        const profRes = await fetch('http://localhost:5001/api/user/profile', {
+        const profRes = await fetch(`${API_BASE}/api/user/profile`, {
           credentials: 'include'
         });
         
@@ -40,7 +44,7 @@ const Dashboard = ({ currentUser, onPlayGame, onUpdateUser }) => {
         const games = ['snake', 'pong', 'ticTacToe', 'memoryMatch'];
         const logsPromises = games.map(async (game) => {
           try {
-            const res = await fetch(`http://localhost:5001/api/scores/me/${game}`, {
+            const res = await fetch(`${API_BASE}/api/scores/me/${game}`, {
               credentials: 'include'
             });
             if (!res.ok) return [];
@@ -122,7 +126,7 @@ const Dashboard = ({ currentUser, onPlayGame, onUpdateUser }) => {
     setSavingProfile(true);
 
     try {
-      const res = await fetch('http://localhost:5001/api/user/profile', {
+      const res = await fetch(`${API_BASE}/api/user/profile`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -82,8 +82,12 @@ const AuthModal = ({ isOpen, onClose, mode, setMode, onAuthSuccess }) => {
       ? { email, password } 
       : { username, email, password };
 
+    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5001'
+      : '';
+
     try {
-      const res = await fetch(`http://localhost:5001${apiPath}`, {
+      const res = await fetch(`${API_BASE}${apiPath}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
